@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "request": "launch",
+            "type": "al",          
+            "startupObjectType": "Page",
+            "breakOnError": true,
+            "launchBrowser": true,
+            "tenant": "yourtenant", 
+            "environmentName":"environmentName",
+            "environmentType": "Sandbox",
+            "schemaUpdateMode": "ForceSync",
+            "forceUpgrade": true,
+        },
+    ]
+}

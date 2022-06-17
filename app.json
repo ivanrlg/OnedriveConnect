@@ -1,0 +1,29 @@
+{
+  "id": "451ce9a6-743c-4aaa-ba63-cd15fb59c193",
+  "name": "OnedriveConnect",
+  "publisher": "IvanSinglenton.dev",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "https://ivansinglenton.dev/",
+  "EULA": "https://ivansinglenton.dev/",
+  "help": "https://ivansinglenton.dev/",
+  "url": "https://ivansinglenton.dev/",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 50500,
+      "to": 50549
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
