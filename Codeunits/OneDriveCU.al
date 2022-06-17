@@ -6,24 +6,18 @@ codeunit 50500 OneDriveCU
 
     procedure GetFilesFromOneDrive()
     var
-        fileMgt: Codeunit "File Management";
+        OneDrive: Record OneDrive;
+        Base64Convert: Codeunit "Base64 Convert";
         httpClient: HttpClient;
         httpContent: HttpContent;
-        httpResponse: HttpResponseMessage;
         httpHeader: HttpHeaders;
-        Result: Boolean;
-        Message: Text;
-        OutPut: Text;
+        httpResponse: HttpResponseMessage;
+        JsonArray: JsonArray;
         JsonObject: JsonObject;
         JsonToken: JsonToken;
-        JsonArray: JsonArray;
-        OneDrive: Record OneDrive;
-        FileArrayBase64: text;
-        TempBLOB: codeunit "Temp Blob";
         OutStream: OutStream;
-        InStr: InStream;
-        Base64Convert: Codeunit "Base64 Convert";
-        FileContent: Text;
+        FileArrayBase64: text;
+        OutPut: Text;
     begin
         httpContent.GetHeaders(httpHeader);
         httpClient.Post(GetUrl, httpContent, httpResponse);
@@ -37,6 +31,8 @@ codeunit 50500 OneDriveCU
         if not JsonArray.ReadFrom(OutPut) then begin
             Error('Problem reading Json.');
         end;
+
+        OneDrive.DeleteAll();
 
         foreach JsonToken in JsonArray do begin
             JsonObject := JsonToken.AsObject();
@@ -63,15 +59,10 @@ codeunit 50500 OneDriveCU
     procedure DownloadFromCloud(Id: Code[50])
     var
         OneDrive: Record OneDrive;
-        Istream1: InStream;
-        Istream2: InStream;
-        OStream: OutStream;
-        TempBLOB: codeunit "Temp Blob";
-        Content: Text;
-        Filename: Text;
         Base64Convert: Codeunit "Base64 Convert";
-        Data: BigText;
-        FileArrayBase64, Base64String, OriginalString : text;
+        Istream: InStream;
+        FileArrayBase64: text;
+        Filename: Text;
     begin
         OneDrive.Get(Id);
 
@@ -79,9 +70,9 @@ codeunit 50500 OneDriveCU
 
         OneDrive.CalcFields(FileArray);
         if OneDrive.FileArray.HasValue then begin
-            OneDrive.FileArray.CreateInStream(Istream1);
-            FileArrayBase64 := Base64Convert.ToBase64(Istream1);
-            DownloadFromStream(Istream1, 'Export', '', 'All Files (*.*)|*.*', Filename);
+            OneDrive.FileArray.CreateInStream(Istream);
+            FileArrayBase64 := Base64Convert.ToBase64(Istream);
+            DownloadFromStream(Istream, 'Export', '', 'All Files (*.*)|*.*', Filename);
         end;
     end;
 
